@@ -1,0 +1,87 @@
+server:
+  port: 8085
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: picpay-challenge-auth
+          uri: http://localhost:8080
+          predicates:
+            - Path=/auth
+            - Method=POST
+
+        - id: picpay-challenge-users-register
+          uri: http://localhost:8080
+          predicates:
+            - Path=/register
+            - Method=POST
+          filters:
+            - SetPath=/users/register
+
+        - id: picpay-challenge-balance
+          uri: http://localhost:8080
+          predicates:
+            - Path=/deposit/{value}
+            - Method=PUT
+          filters:
+            - SetPath=/balance/deposit/{value}
+
+        - id: picpay-challenge-balance-history
+          uri: http://localhost:8080
+          predicates:
+            - Path=/deposit-history
+            - Method=GET
+          filters:
+            - SetPath=/balance/deposit-history
+
+        - id: picpay-challenge-profile
+          uri: http://localhost:8080
+          predicates:
+            - Path=/profile
+            - Method=GET
+          filters:
+            - SetPath=/users/profile
+
+        - id: picpay-challenge-transfer
+          uri: http://localhost:8080
+          predicates:
+            - Path=/transfers
+            - Method=POST
+          filters:
+            - SetPath=/transfers/transfer
+
+        - id: picpay-challenge-transfers-payed
+          uri: http://localhost:8080
+          predicates:
+            - Path=/transfers-payed
+            - Method=GET
+          filters:
+            - SetPath=/transfers/payed
+
+        - id: picpay-challenge-transfers-received
+          uri: http://localhost:8080
+          predicates:
+            - Path=/transfers-received
+            - Method=GET
+          filters:
+            - SetPath=/transfers/received
+
+        - id: picpay-challenge-transfers-amount
+          uri: http://localhost:8080
+          predicates:
+            - Path=/transfers-amount
+            - Method=GET
+          filters:
+            - SetPath=/transfers/amount
+
+        - id: picpay-challenge-transfers
+          uri: http://localhost:8080
+          predicates:
+            - Path=/transfers
+            - Method=GET
+          filters:
+            - SetPath=/transfers/
+
+
+jwt-secret-key: G5jU$1vM#p!sX2W@zQ9oT7cY&rB3dK8fL6N^aC0E*JmP4Vx%hF#yMZqWj^8d@
+

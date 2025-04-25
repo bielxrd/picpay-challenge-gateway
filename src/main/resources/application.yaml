@@ -1,3 +1,8 @@
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
 server:
   port: 8085
 spring:
@@ -5,13 +10,13 @@ spring:
     gateway:
       routes:
         - id: picpay-challenge-auth
-          uri: http://localhost:8080
+          uri: lb://picpay-challenge
           predicates:
             - Path=/auth
             - Method=POST
 
         - id: picpay-challenge-users-register
-          uri: http://localhost:8080
+          uri: lb://picpay-challenge
           predicates:
             - Path=/register
             - Method=POST
@@ -19,7 +24,7 @@ spring:
             - SetPath=/users/register
 
         - id: picpay-challenge-balance
-          uri: http://localhost:8080
+          uri: lb://picpay-challenge
           predicates:
             - Path=/deposit/{value}
             - Method=PUT
@@ -27,7 +32,7 @@ spring:
             - SetPath=/balance/deposit/{value}
 
         - id: picpay-challenge-balance-history
-          uri: http://localhost:8080
+          uri: lb://picpay-challenge
           predicates:
             - Path=/deposit-history
             - Method=GET
@@ -35,7 +40,7 @@ spring:
             - SetPath=/balance/deposit-history
 
         - id: picpay-challenge-profile
-          uri: http://localhost:8080
+          uri: lb://picpay-challenge
           predicates:
             - Path=/profile
             - Method=GET
@@ -43,7 +48,7 @@ spring:
             - SetPath=/users/profile
 
         - id: picpay-challenge-transfer
-          uri: http://localhost:8080
+          uri: lb://picpay-challenge
           predicates:
             - Path=/transfers
             - Method=POST
@@ -51,7 +56,7 @@ spring:
             - SetPath=/transfers/transfer
 
         - id: picpay-challenge-transfers-payed
-          uri: http://localhost:8080
+          uri: lb://picpay-challenge
           predicates:
             - Path=/transfers-payed
             - Method=GET
@@ -59,7 +64,7 @@ spring:
             - SetPath=/transfers/payed
 
         - id: picpay-challenge-transfers-received
-          uri: http://localhost:8080
+          uri: lb://picpay-challenge
           predicates:
             - Path=/transfers-received
             - Method=GET
@@ -67,7 +72,7 @@ spring:
             - SetPath=/transfers/received
 
         - id: picpay-challenge-transfers-amount
-          uri: http://localhost:8080
+          uri: lb://picpay-challenge
           predicates:
             - Path=/transfers-amount
             - Method=GET
@@ -75,12 +80,14 @@ spring:
             - SetPath=/transfers/amount
 
         - id: picpay-challenge-transfers
-          uri: http://localhost:8080
+          uri: lb://picpay-challenge
           predicates:
             - Path=/transfers
             - Method=GET
           filters:
             - SetPath=/transfers/
+  application:
+    name: picpay-challenge-cloud-gateway
 
 
 jwt-secret-key: G5jU$1vM#p!sX2W@zQ9oT7cY&rB3dK8fL6N^aC0E*JmP4Vx%hF#yMZqWj^8d@
